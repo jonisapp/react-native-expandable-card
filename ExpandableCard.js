@@ -29,15 +29,23 @@ const ExpandableCard = ({ expandedCardItems, collapsedCardItems, labelStyle, val
           Array.isArray(value) ?
           <View style={{flex: 1, alignItems: 'center'}}>
             {
-              value.map(item => {
-                return (
-                    <Text key={ item } style={{...styles.text, textAlign: 'right', ...valueStyle}}>{ item }</Text>
-                );
+              value.map((item, i) => {
+                if(typeof item === 'string') {
+                  return <Text key={ item } style={{...styles.text, textAlign: 'right', ...valueStyle}}>{ item }</Text>
+                }
+                else if(React.isValidElement(item)) {
+                  return (
+                    <View key={i} style={{width: '100%', alignItems: 'flex-end'}}>
+                      { item }
+                    </View>
+                  );
+                }
               })
             }
           </View>
           :
-            <View style={{flex: 1, alignItems: 'center'}}><Text style={{...styles.text, ...valueStyle}}>{ value }</Text></View>
+            React.isValidElement(value) ? <View key={i} style={{width: '100%', alignItems: 'flex-end'}}> { item } </View>
+            : <View style={{flex: 1, alignItems: 'center'}}><Text style={{...styles.text, ...valueStyle}}>{ value }</Text></View>
         }
       </View>
     );
@@ -115,7 +123,8 @@ const itemsPropType = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired,
-    PropTypes.array.isRequired
+    PropTypes.array.isRequired,
+    PropTypes.element.isRequired
   ])
 }));
 
