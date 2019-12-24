@@ -1,10 +1,10 @@
 # react-native-expandable-card
 A react-native expandable and collapsible animated card
 
-##Installation
+## Installation
 npm install --save react-native-expandable-card
 
-##Use
+## Use
 ```javascript
 import React from 'react';
 import { View } from 'react-native';
